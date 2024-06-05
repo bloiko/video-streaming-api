@@ -1,0 +1,71 @@
+### Publish a video
+
+POST http://localhost:8080/v1/api/videos
+Content-Type: application/json
+
+{
+  "id": 7,
+  "title": "Some video",
+  "description": "",
+  "director": { "id" : 1},
+  "actors": [ {"id": 2}],
+  "genre": {"id": 1},
+  "yearOfRelease": 0,
+  "runningTime": 0,
+  "impressionsCount": 0,
+  "viewsCount": 0
+}
+
+
+### Edit the metadata associated with the video
+
+PUT http://localhost:8080/v1/api/videos/7
+Content-Type: application/json
+
+{
+  "id": 7,
+  "title": "Some video",
+  "description": "",
+  "director": { "id" : 1},
+  "actors": [ {"id": 2}],
+  "genre": {"id": 1},
+  "yearOfRelease": 0,
+  "runningTime": 0,
+  "impressionsCount": 0,
+  "viewsCount": 0
+}
+
+### Delist (soft delete) a video and its associated metadata
+
+DELETE http://localhost:8080/v1/api/videos/7
+
+### Load a video – return the video metadata and the corresponding content.
+
+GET http://localhost:8080/v1/api/videos/6
+
+### Play a video – return the content related to a video. The content can be a simple string that acts as a mock to the actual video content.
+
+GET http://localhost:8080/v1/api/videos/6/play
+
+### List all available videos – This should return only a subset of the video metadata such as:
+### Title, Director, Main Actor, Genre and Running Time.
+
+GET http://localhost:8080/v1/api/videos/summaries
+
+### Search for videos based on some search/query criteria (e.g.: Movies directed by a specific director) – The returned result-set should still feature the same subset of metadata as outlined in the previous point.
+
+POST http://localhost:8080/v1/api/videos/search
+Content-Type: application/json
+
+[
+  {
+    "filterName": "title",
+    "value": "Video 2"
+  }
+]
+
+### Retrieve the engagement statistic for a video. Engagement can be split in 2:
+### - Impressions – A client loading a video.
+### - Views – A client playing a video.
+
+GET http://localhost:8080/v1/api/videos/6/engagement

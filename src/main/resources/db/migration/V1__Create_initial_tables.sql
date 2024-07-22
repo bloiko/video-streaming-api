@@ -1,3 +1,10 @@
+create table engagement
+(
+    video_id   bigint  not null primary key,
+    impressions bigint not null,
+    views bigint not null
+);
+
 create table genre
 (
     id   bigint   auto_increment    not null
@@ -17,11 +24,9 @@ create table video
     id              bigint  auto_increment     not null
         primary key,
     description     varchar(255) null,
-    impressions     bigint       not null,
     is_deleted      bit          not null,
     running_time    int          not null,
     title           varchar(255) null,
-    views           bigint       not null,
     year_of_release int          not null,
     director_id     bigint       null,
     genre_id        bigint       null,

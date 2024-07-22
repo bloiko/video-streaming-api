@@ -4,7 +4,6 @@ POST http://localhost:8080/v1/api/videos
 Content-Type: application/json
 
 {
-  "id": 7,
   "title": "Some video",
   "description": "",
   "director": { "id" : 1},
@@ -68,4 +67,4 @@ Content-Type: application/json
 ### - Impressions – A client loading a video.
 ### - Views – A client playing a video.
 
-GET http://localhost:8080/v1/api/videos/6/engagement
+GET http://localhost:8080/v1/api/videos/2/engagement

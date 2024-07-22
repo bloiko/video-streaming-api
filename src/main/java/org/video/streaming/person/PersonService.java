@@ -13,6 +13,8 @@ public class PersonService {
     }
 
     public Person findById(Long id) {
-        return personRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Person not found " + id));
+        Person person =
+                personRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Person not found " + id));
+        return person;
     }
 }

@@ -13,8 +13,9 @@ public class EngagementService {
     }
 
     EngagementDto getEngagement(Long videoId) {
-        Engagement engagement = engagementRepository.findById(videoId)
-                                                    .orElseThrow(() -> new EntityNotFoundException("Engagement not found for video: " + videoId));
+        Engagement engagement = engagementRepository
+                .findById(videoId)
+                .orElseThrow(() -> new EntityNotFoundException("Engagement not found for video: " + videoId));
 
         EngagementDto engagementDto = new EngagementDto();
         engagementDto.setImpressionsCount(engagement.getImpressions());
@@ -38,4 +39,3 @@ public class EngagementService {
         engagementRepository.save(engagement);
     }
 }
-

@@ -1,5 +1,9 @@
 package org.video.streaming.video;
 
+import static org.springframework.util.CollectionUtils.isEmpty;
+
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.video.streaming.common.exeption.EntityNotFoundException;
@@ -10,11 +14,6 @@ import org.video.streaming.genre.GenreService;
 import org.video.streaming.person.Person;
 import org.video.streaming.person.PersonDto;
 import org.video.streaming.person.PersonService;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Service
 public class VideoService {
@@ -27,8 +26,11 @@ public class VideoService {
 
     private final EngagementService engagementService;
 
-    public VideoService(VideoRepository videoRepository, PersonService personService, GenreService genreService,
-                        EngagementService engagementService) {
+    public VideoService(
+            VideoRepository videoRepository,
+            PersonService personService,
+            GenreService genreService,
+            EngagementService engagementService) {
         this.videoRepository = videoRepository;
         this.personService = personService;
         this.genreService = genreService;
@@ -109,11 +111,10 @@ public class VideoService {
      * @return list of short video representations
      */
     List<VideoSummaryDto> listVideoSummaries() {
-        return videoRepository.findAll()
-                              .stream()
-                              .filter(video -> !video.isDeleted())
-                              .map(this::mapToSummaryDto)
-                              .collect(Collectors.toList());
+        return videoRepository.findAll().stream()
+                .filter(video -> !video.isDeleted())
+                .map(this::mapToSummaryDto)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -124,17 +125,17 @@ public class VideoService {
      */
     List<VideoSummaryDto> searchVideosByFilters(List<Filter> filters) {
         Specification<Video> spec = VideoSpecification.getVideosByFilters(filters);
-        return videoRepository.findAll(spec)
-                              .stream()
-                              .filter(video -> !video.isDeleted())
-                              .map(this::mapToSummaryDto)
-                              .collect(Collectors.toList());
+        return videoRepository.findAll(spec).stream()
+                .filter(video -> !video.isDeleted())
+                .map(this::mapToSummaryDto)
+                .collect(Collectors.toList());
     }
 
     private Video findVideoById(Long videoId) {
-        return videoRepository.findById(videoId)
-                              .filter(video -> !video.isDeleted())
-                              .orElseThrow(() -> new EntityNotFoundException("Video not found"));
+        return videoRepository
+                .findById(videoId)
+                .filter(video -> !video.isDeleted())
+                .orElseThrow(() -> new EntityNotFoundException("Video not found"));
     }
 
     private Person findPerson(PersonDto personDto) {
@@ -159,8 +160,10 @@ public class VideoService {
         VideoSummaryDto summaryDto = new VideoSummaryDto();
         summaryDto.setTitle(video.getTitle());
         summaryDto.setDirectorName(video.getDirector().getName());
-        summaryDto.setMainActorName(isEmpty(video.getActors()) ? "" : video.getActors().get(0).getName());
-        summaryDto.setGenreName(video.getGenre() == null ? null : video.getGenre().getName());
+        summaryDto.setMainActorName(
+                isEmpty(video.getActors()) ? "" : video.getActors().get(0).getName());
+        summaryDto.setGenreName(
+                video.getGenre() == null ? null : video.getGenre().getName());
         summaryDto.setRunningTime(video.getRunningTime());
         return summaryDto;
     }
@@ -195,4 +198,3 @@ public class VideoService {
         return genreDto;
     }
 }
-

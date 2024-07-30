@@ -1,13 +1,12 @@
 package org.video.streaming.video;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.video.streaming.genre.Genre;
 import org.video.streaming.person.Person;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -27,7 +26,10 @@ public class Video {
     private Person director;
 
     @ManyToMany
-    @JoinTable(name = "video_actor", joinColumns = @JoinColumn(name = "video_id"), inverseJoinColumns = @JoinColumn(name = "actor_id"))
+    @JoinTable(
+            name = "video_actor",
+            joinColumns = @JoinColumn(name = "video_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id"))
     private List<Person> actors = new ArrayList<>();
 
     @ManyToOne

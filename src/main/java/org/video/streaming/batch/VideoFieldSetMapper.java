@@ -1,12 +1,11 @@
 package org.video.streaming.batch;
 
+import java.util.Arrays;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.video.streaming.genre.GenreDto;
 import org.video.streaming.person.PersonDto;
 import org.video.streaming.video.VideoDto;
-
-import java.util.Arrays;
 
 public class VideoFieldSetMapper implements FieldSetMapper<VideoDto> {
 
@@ -16,10 +15,11 @@ public class VideoFieldSetMapper implements FieldSetMapper<VideoDto> {
         videoDto.setTitle(fieldSet.readString("Tittle"));
         videoDto.setDescription(fieldSet.readString("Description"));
         videoDto.setDirector(buildPerson(fieldSet.readLong("Director ID")));
-        videoDto.setActors(Arrays.stream(fieldSet.readString("Actors ID(; separated)").split(";"))
-                                 .map(Long::valueOf)
-                                 .map(this::buildPerson)
-                                 .toList());
+        videoDto.setActors(
+                Arrays.stream(fieldSet.readString("Actors ID(; separated)").split(";"))
+                        .map(Long::valueOf)
+                        .map(this::buildPerson)
+                        .toList());
         videoDto.setGenre(buildGenre(fieldSet.readLong("Genre ID")));
         videoDto.setYearOfRelease(fieldSet.readInt("Year Of Release"));
 

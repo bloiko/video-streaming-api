@@ -1,8 +1,7 @@
 package org.video.streaming.video;
 
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/api/videos")

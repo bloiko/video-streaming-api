@@ -1,10 +1,9 @@
 package org.video.streaming.video;
 
+import java.util.List;
 import lombok.Data;
 import org.video.streaming.genre.GenreDto;
 import org.video.streaming.person.PersonDto;
-
-import java.util.List;
 
 @Data
 public class VideoDto {

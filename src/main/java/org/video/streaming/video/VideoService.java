@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Service
-class VideoService {
+public class VideoService {
 
     private final VideoRepository videoRepository;
 
@@ -41,7 +41,7 @@ class VideoService {
      * @param videoDto dto with all video metadata
      * @return saved video dto with new id
      */
-    VideoDto publishVideo(VideoDto videoDto) {
+    public VideoDto publishVideo(VideoDto videoDto) {
         Video video = new Video();
         populateVideoData(videoDto, video);
 
@@ -71,7 +71,7 @@ class VideoService {
      *
      * @param videoId id of existing video
      */
-    void delistVideo(Long videoId) {
+    public void delistVideo(Long videoId) {
         Video video = findVideoById(videoId);
         video.setDeleted(true);
         videoRepository.save(video);

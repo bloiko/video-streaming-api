@@ -54,9 +54,13 @@ jobs:
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git add .
-          git commit -m "Apply code formatting"
-          git push -f origin HEAD:${{ github.head_ref }}
+          if [[ `git status --porcelain` ]]; then
+            git add .
+            git commit -m "Apply code formatting"
+            git push -f origin HEAD:${{ github.head_ref }}
+          else
+            echo "No changes to commit"
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_TOKEN }}
 

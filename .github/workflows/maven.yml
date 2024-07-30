@@ -77,3 +77,8 @@ jobs:
         run: gh pr merge ${{ github.event.pull_request.number }} --merge --repo ${{ github.repository }}
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_TOKEN }}
+
+      - name: Delete the branch
+        run: gh repo delete-branch ${{ github.head_ref }} --repo ${{ github.repository }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.CUSTOM_TOKEN }}

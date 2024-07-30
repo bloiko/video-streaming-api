@@ -79,6 +79,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_TOKEN }}
 
       - name: Delete the branch
-        run: gh repo delete-branch ${{ github.head_ref }} --repo ${{ github.repository }}
+        run: |
+          git fetch origin
+          git branch -r | grep "origin/${{ github.head_ref }}" | sed 's/origin\///' | xargs -I {} git push origin --delete {}
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_TOKEN }}

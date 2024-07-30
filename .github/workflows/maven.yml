@@ -73,11 +73,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Authenticate with GitHub CLI
-        env:
-          GITHUB_TOKEN: ${{ secrets.CUSTOM_TOKEN }}
-        run: echo "${{ secrets.CUSTOM_TOKEN }}" | gh auth login --with-token
-
       - name: Merge the pull request
         run: gh pr merge ${{ github.event.pull_request.number }} --merge --repo ${{ github.repository }}
         env:

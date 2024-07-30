@@ -31,7 +31,7 @@ jobs:
           git commit -m "Apply code formatting"
           git push origin HEAD:${{ github.head_ref }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CUSTOM_TOKEN }}
 
       - name: Build with Maven
         run: mvn -B compile package --file pom.xml

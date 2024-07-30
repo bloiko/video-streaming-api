@@ -12,7 +12,7 @@ public class PersonService {
         this.personRepository = personRepository;
     }
 
-    public Person findById(Long id) {
+    public Person  findById(Long id) {
         return personRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Person not found " + id));
     }
 }

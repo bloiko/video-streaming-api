@@ -7,7 +7,7 @@ import org.video.streaming.person.PersonDto;
 import java.util.List;
 
 @Data
-class VideoDto {
+public class VideoDto {
 
     private Long id;
 

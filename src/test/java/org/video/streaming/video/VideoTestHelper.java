@@ -1,11 +1,10 @@
 package org.video.streaming.video;
 
+import java.util.Arrays;
 import org.video.streaming.genre.Genre;
 import org.video.streaming.genre.GenreDto;
 import org.video.streaming.person.Person;
 import org.video.streaming.person.PersonDto;
-
-import java.util.Arrays;
 
 public class VideoTestHelper {
 

@@ -1,5 +1,11 @@
 package org.video.streaming.batch;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
@@ -21,13 +27,6 @@ import org.video.streaming.person.PersonDto;
 import org.video.streaming.video.VideoDto;
 import org.video.streaming.video.VideoService;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
-
 @Configuration
 public class AddVideoJobConfig {
 
@@ -41,21 +40,27 @@ public class AddVideoJobConfig {
 
     @Autowired
     private VideoService videoService;
+
     private String inputVideoFile;
     //
-//    @Value("classpath:/Users/bohdan.loiko/IdeaProjects/video-streaming-api/src/main/java/org/video/streaming/batch/videos.csv")
-//    private Resource csvFile;
+    //
+    // @Value("classpath:/Users/bohdan.loiko/IdeaProjects/video-streaming-api/src/main/java/org/video/streaming/batch/videos.csv")
+    //    private Resource csvFile;
 
     @Bean
     public Job importUserJob() {
-        return new JobBuilder("add-video", jobRepository).incrementer(new RunIdIncrementer()).start(step1()).build();
+        return new JobBuilder("add-video", jobRepository)
+                .incrementer(new RunIdIncrementer())
+                .start(step1())
+                .build();
     }
 
     public Step step1() {
-        return new StepBuilder("step1", jobRepository).<VideoDto, VideoDto>chunk(1, transactionManager)
-                                                      .reader(itemReaderCsv())
-                                                      .writer(itemWriter())
-                                                      .build();
+        return new StepBuilder("step1", jobRepository)
+                .<VideoDto, VideoDto>chunk(1, transactionManager)
+                .reader(itemReaderCsv())
+                .writer(itemWriter())
+                .build();
     }
 
     public ItemReader<VideoDto> itemReader() {
@@ -86,7 +91,7 @@ public class AddVideoJobConfig {
     public FlatFileItemReader<VideoDto> itemReaderCsv() {
         InputStream inputStream;
         try {
-            //TODO maybe use can:
+            // TODO maybe use can:
             // 1. specify this csv
             // 2. upload to the db
             // 3. system will read file from DB
@@ -99,13 +104,14 @@ public class AddVideoJobConfig {
         }
         Resource csvFile = new InputStreamResource(inputStream);
 
-        return new FlatFileItemReaderBuilder<VideoDto>().name("videoItemReader")
-                                                        .delimited()
-                                                        .names("Tittle", "Description", "Director ID", "Actors ID(; separated)", "Genre ID", "Year Of Release")
-                                                        .fieldSetMapper(new VideoFieldSetMapper())
-                                                        .resource(csvFile)
-                                                        .linesToSkip(1)
-                                                        .build();
+        return new FlatFileItemReaderBuilder<VideoDto>()
+                .name("videoItemReader")
+                .delimited()
+                .names("Tittle", "Description", "Director ID", "Actors ID(; separated)", "Genre ID", "Year Of Release")
+                .fieldSetMapper(new VideoFieldSetMapper())
+                .resource(csvFile)
+                .linesToSkip(1)
+                .build();
     }
 
     public ItemWriter<? super VideoDto> itemWriter() {

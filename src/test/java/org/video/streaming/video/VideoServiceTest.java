@@ -1,5 +1,12 @@
 package org.video.streaming.video;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -12,14 +19,6 @@ import org.video.streaming.common.exeption.EntityNotFoundException;
 import org.video.streaming.genre.GenreService;
 import org.video.streaming.person.Person;
 import org.video.streaming.person.PersonService;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class VideoServiceTest {
@@ -58,28 +57,30 @@ class VideoServiceTest {
         assertEquals(videoDto.getTitle(), capturedVideo.getTitle());
     }
 
-//    @Test
-//    void testPublishVideo_DirectorNotFound() {
-//        VideoDto videoDto = VideoTestHelper.createVideoDto();
-//        when(personService.findById(videoDto.getDirector().getId())).thenReturn(Optional.empty());
-//
-//        EntityNotFoundException
-//                entityNotFoundException = assertThrows(EntityNotFoundException.class, () -> videoService.publishVideo(videoDto));
-//        assertEquals("Person not found 1", entityNotFoundException.getMessage());
-//    }
+    //    @Test
+    //    void testPublishVideo_DirectorNotFound() {
+    //        VideoDto videoDto = VideoTestHelper.createVideoDto();
+    //        when(personService.findById(videoDto.getDirector().getId())).thenReturn(Optional.empty());
+    //
+    //        EntityNotFoundException
+    //                entityNotFoundException = assertThrows(EntityNotFoundException.class, () ->
+    // videoService.publishVideo(videoDto));
+    //        assertEquals("Person not found 1", entityNotFoundException.getMessage());
+    //    }
 
-//    @Test
-//    void testPublishVideo_GenreNotFound() {
-//        VideoDto videoDto = VideoTestHelper.createVideoDto();
-//
-//        when(personService.findById(videoDto.getDirector().getId())).thenReturn(new Person());
-//        when(personService.findById(videoDto.getActors().get(0).getId())).thenReturn(new Person());
-//        when(personService.findById(videoDto.getActors().get(1).getId())).thenReturn(new Person());
-//        when(genreService.findById(videoDto.getGenre().getId())).thenReturn(null);
-//
-//        EntityNotFoundException entityNotFoundException = assertThrows(EntityNotFoundException.class, () -> videoService.publishVideo(videoDto));
-//        assertEquals("Genre not found 1", entityNotFoundException.getMessage());
-//    }
+    //    @Test
+    //    void testPublishVideo_GenreNotFound() {
+    //        VideoDto videoDto = VideoTestHelper.createVideoDto();
+    //
+    //        when(personService.findById(videoDto.getDirector().getId())).thenReturn(new Person());
+    //        when(personService.findById(videoDto.getActors().get(0).getId())).thenReturn(new Person());
+    //        when(personService.findById(videoDto.getActors().get(1).getId())).thenReturn(new Person());
+    //        when(genreService.findById(videoDto.getGenre().getId())).thenReturn(null);
+    //
+    //        EntityNotFoundException entityNotFoundException = assertThrows(EntityNotFoundException.class, () ->
+    // videoService.publishVideo(videoDto));
+    //        assertEquals("Genre not found 1", entityNotFoundException.getMessage());
+    //    }
 
     @Test
     void testEditVideo() {
@@ -110,46 +111,46 @@ class VideoServiceTest {
         verify(videoRepository, times(1)).save(video);
     }
 
-//    @Test
-//    void testLoadVideoWithGenreNull() {
-//        Video video = VideoTestHelper.createVideo();
-//        video.setGenre(null);
-//
-//        when(videoRepository.findById(1L)).thenReturn(Optional.of(video));
-//
-//        VideoDto result = videoService.loadVideo(1L);
-//        assertNotNull(result);
-//        assertEquals(video.getId(), result.getId());
-//        verify(videoRepository, times(1)).save(videoArgumentCaptor.capture());
-//    }
+    //    @Test
+    //    void testLoadVideoWithGenreNull() {
+    //        Video video = VideoTestHelper.createVideo();
+    //        video.setGenre(null);
+    //
+    //        when(videoRepository.findById(1L)).thenReturn(Optional.of(video));
+    //
+    //        VideoDto result = videoService.loadVideo(1L);
+    //        assertNotNull(result);
+    //        assertEquals(video.getId(), result.getId());
+    //        verify(videoRepository, times(1)).save(videoArgumentCaptor.capture());
+    //    }
 
-//    @Test
-//    void testLoadVideoWithAllFields() {
-//        Video video = VideoTestHelper.createVideo();
-//
-//        when(videoRepository.findById(1L)).thenReturn(Optional.of(video));
-//
-//        VideoDto result = videoService.loadVideo(1L);
-//
-//        assertNotNull(result);
-//        assertEquals(video.getId(), result.getId());
-//        assertEquals(video.getTitle(), result.getTitle());
-//        assertEquals(video.getDescription(), result.getDescription());
-//        assertEquals(video.getDirector().getId(), result.getDirector().getId());
-//        assertEquals(video.getDirector().getName(), result.getDirector().getName());
-//        assertEquals(2, result.getActors().size());
-//        assertEquals(video.getActors().get(0).getId(), result.getActors().get(0).getId());
-//        assertEquals(video.getActors().get(0).getName(), result.getActors().get(0).getName());
-//        assertEquals(video.getActors().get(1).getId(), result.getActors().get(1).getId());
-//        assertEquals(video.getActors().get(1).getName(), result.getActors().get(1).getName());
-//        assertEquals(video.getGenre().getId(), result.getGenre().getId());
-//        assertEquals(video.getGenre().getName(), result.getGenre().getName());
-//        assertEquals(video.getYearOfRelease(), result.getYearOfRelease());
-//        assertEquals(video.getRunningTime(), result.getRunningTime());
-//        assertEquals(101, result.getImpressionsCount());
-//
-//        verify(videoRepository, times(1)).save(video);
-//    }
+    //    @Test
+    //    void testLoadVideoWithAllFields() {
+    //        Video video = VideoTestHelper.createVideo();
+    //
+    //        when(videoRepository.findById(1L)).thenReturn(Optional.of(video));
+    //
+    //        VideoDto result = videoService.loadVideo(1L);
+    //
+    //        assertNotNull(result);
+    //        assertEquals(video.getId(), result.getId());
+    //        assertEquals(video.getTitle(), result.getTitle());
+    //        assertEquals(video.getDescription(), result.getDescription());
+    //        assertEquals(video.getDirector().getId(), result.getDirector().getId());
+    //        assertEquals(video.getDirector().getName(), result.getDirector().getName());
+    //        assertEquals(2, result.getActors().size());
+    //        assertEquals(video.getActors().get(0).getId(), result.getActors().get(0).getId());
+    //        assertEquals(video.getActors().get(0).getName(), result.getActors().get(0).getName());
+    //        assertEquals(video.getActors().get(1).getId(), result.getActors().get(1).getId());
+    //        assertEquals(video.getActors().get(1).getName(), result.getActors().get(1).getName());
+    //        assertEquals(video.getGenre().getId(), result.getGenre().getId());
+    //        assertEquals(video.getGenre().getName(), result.getGenre().getName());
+    //        assertEquals(video.getYearOfRelease(), result.getYearOfRelease());
+    //        assertEquals(video.getRunningTime(), result.getRunningTime());
+    //        assertEquals(101, result.getImpressionsCount());
+    //
+    //        verify(videoRepository, times(1)).save(video);
+    //    }
 
     @Test
     void testLoadVideoWhenVideoIsDeleted() {
@@ -160,18 +161,18 @@ class VideoServiceTest {
         assertThrows(EntityNotFoundException.class, () -> videoService.loadVideo(videoId));
     }
 
-//    @Test
-//    void testGetEngagement() {
-//        Video video = VideoTestHelper.createVideo();
-//        video.setImpressions(10);
-//        video.setViews(5);
-//
-//        when(videoRepository.findById(1L)).thenReturn(Optional.of(video));
-//
-//        EngagementDto engagement = videoService.getEngagement(1L);
-//        assertEquals(10, engagement.getImpressionsCount());
-//        assertEquals(5, engagement.getViewsCount());
-//    }
+    //    @Test
+    //    void testGetEngagement() {
+    //        Video video = VideoTestHelper.createVideo();
+    //        video.setImpressions(10);
+    //        video.setViews(5);
+    //
+    //        when(videoRepository.findById(1L)).thenReturn(Optional.of(video));
+    //
+    //        EngagementDto engagement = videoService.getEngagement(1L);
+    //        assertEquals(10, engagement.getImpressionsCount());
+    //        assertEquals(5, engagement.getViewsCount());
+    //    }
 
     @Test
     void testSearchVideosByFilters() {

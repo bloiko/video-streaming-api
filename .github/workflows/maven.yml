@@ -74,7 +74,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Merge the pull request
-        run: gh pr merge ${{ github.event.pull_request.number }} --merge --auto --admin --repo ${{ github.repository }}
+        run: gh pr merge ${{ github.event.pull_request.number }} --merge --admin --repo ${{ github.repository }}
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_TOKEN }}
 
